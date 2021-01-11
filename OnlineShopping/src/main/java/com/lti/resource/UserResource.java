@@ -68,7 +68,10 @@ public class UserResource {
 		return "Failed";
 	}
 
-	
+	@GetMapping(value = "/findRetailerById")
+	public Retailer findRetailerById(@RequestParam("retailerId") long retailerId) {
+		return userService.findRetailerById(retailerId);
+	}
 	
 	
 }
