@@ -9,65 +9,66 @@ import com.lti.dto.Cart;
 import com.lti.entity.Order;
 import com.lti.entity.OrderItem;
 import com.lti.entity.Product;
+import com.lti.repository.CartRepository;
 
 @Component
 public class CartServiceImpl implements CartService {
 	
 	@Autowired
-	CartService cartService;
+	CartRepository cartRepository;
 
 	@Override
 	public Order addorUpdateOrder(Order order) {
 		// TODO Auto-generated method stub
-		return cartService.addorUpdateOrder(order);
+		return cartRepository.addorUpdateOrder(order);
 	}
 
 	@Override
 	public Order findOrderById(long orderId) {
 		// TODO Auto-generated method stub
-		return cartService.findOrderById(orderId);
+		return cartRepository.findOrderById(orderId);
 	}
 
 	@Override
 	public List<Order> viewAllOrders() {
 		// TODO Auto-generated method stub
-		return cartService.viewAllOrders();
+		return cartRepository.viewAllOrders();
 	}
 
 	@Override
 	public OrderItem addOrUpdateOrderItem(OrderItem orderItem) {
 		// TODO Auto-generated method stub
-		return cartService.addOrUpdateOrderItem(orderItem);
+		return cartRepository.addOrUpdateOrderItem(orderItem);
 	}
 
 	@Override
 	public OrderItem findOrderItemById(long orderItemId) {
 		// TODO Auto-generated method stub
-		return cartService.findOrderItemById(orderItemId);
+		return cartRepository.findOrderItemById(orderItemId);
 	}
 
 	@Override
 	public List<OrderItem> viewAllOrderItems() {
 		// TODO Auto-generated method stub
-		return cartService.viewAllOrderItems();
+		return cartRepository.viewAllOrderItems();
 	}
 
 	@Override
 	public Cart getCart() {
 		// TODO Auto-generated method stub
-		return cartService.getCart();
+		return cartRepository.getCart();
 	}
 
 	@Override
 	public void setCart(Cart cart) {
 		// TODO Auto-generated method stub
-		cartService.setCart(cart);
+		cartRepository.setCart(cart);
 	}
 
 	@Override
 	public void createCart(long customerId) {
 		// TODO Auto-generated method stub
-		cartService.createCart(customerId);
+		cartRepository.createCart(customerId);
 
 	}
 
@@ -104,6 +105,12 @@ public class CartServiceImpl implements CartService {
 	@Override
 	public void addIntoOrderAndOrderItemByCart(Cart cart) {
 		// TODO Auto-generated method stub
+		try {
+			cartRepository.addIntoOrderAndOrderItemByCart(cart);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 	}
 

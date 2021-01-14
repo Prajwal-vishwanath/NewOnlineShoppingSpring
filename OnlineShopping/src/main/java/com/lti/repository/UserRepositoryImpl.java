@@ -30,17 +30,18 @@ public class UserRepositoryImpl implements UserRepository {
 	}
 
 
-	public boolean authenticateWithEmailAndPasswordAdmin(String email, String password) {
+	public Admin authenticateWithEmailAndPasswordAdmin(String email, String password) {
 		String jpql = "Select a from Admin a where a.emailId=:emailId and a.password=:pwd";
+		Admin admin;
 		try {
 			Query query = em.createQuery(jpql);
 			query.setParameter("emailId", email);
 			query.setParameter("pwd", password);
-			Admin admin = (Admin) query.getSingleResult();
+			admin = (Admin) query.getSingleResult();
 		} catch (Exception NoResultException) {
-			return false;
+			return null;
 		}
-		return true;
+		return admin;
 	}
 
 
@@ -70,17 +71,18 @@ public class UserRepositoryImpl implements UserRepository {
 	}
 
 	
-	public boolean authenticateWithEmailAndPasswordCustomer(String email, String password) {
+	public Customer authenticateWithEmailAndPasswordCustomer(String email, String password) {
 		String jpql = "Select c from Customer c where c.emailId=:emailId and c.password=:pwd";
+		Customer customer;
 		try {
 			Query query = em.createQuery(jpql);
 			query.setParameter("emailId", email);
 			query.setParameter("pwd", password);
-			Customer customer = (Customer) query.getSingleResult();
+			 customer = (Customer) query.getSingleResult();
 		} catch (Exception NoResultException) {
-			return false;
+			return null;
 		}
-		return true;
+		return customer;
 	}
 
 	
@@ -101,17 +103,19 @@ public class UserRepositoryImpl implements UserRepository {
 	}
 
 	
-	public boolean authenticateWithEmailAndPasswordRetailer(String email, String password) {
+	public Retailer authenticateWithEmailAndPasswordRetailer(String email, String password) {
 		String jpql = "Select r from Retailer r where r.emailId=:emailId and r.password=:pwd";
+		
+		Retailer retailer;
 		try {
 			Query query = em.createQuery(jpql);
 			query.setParameter("emailId", email);
 			query.setParameter("pwd", password);
-			Retailer retailer = (Retailer) query.getSingleResult();
+			retailer = (Retailer) query.getSingleResult();
 		} catch (Exception NoResultException) {
-			return false;
+			return null;
 		}
-		return true;
+		return retailer;
 	}
 
 	

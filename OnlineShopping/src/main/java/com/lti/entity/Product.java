@@ -1,5 +1,7 @@
 package com.lti.entity;
 
+import java.util.List;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -12,6 +14,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "tbl_product1")
@@ -35,8 +39,8 @@ public class Product {
 	@JoinColumn(name="retailer_Id")
 	Retailer retailer;
 	
-    @OneToOne(mappedBy = "product",cascade = CascadeType.ALL,fetch = FetchType.EAGER)
-    OrderItem orderitem;
+    @OneToMany(mappedBy = "product",cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+    List<OrderItem> orderitems;
 
 	public long getProductId() {
 		return productId;
@@ -110,6 +114,7 @@ public class Product {
 		this.descriptionText = descriptionText;
 	}
 
+	//@JsonIgnore
 	public Retailer getRetailer() {
 		return retailer;
 	}
@@ -117,15 +122,16 @@ public class Product {
 	public void setRetailer(Retailer retailer) {
 		this.retailer = retailer;
 	}
-
-	public OrderItem getOrderitem() {
-		return orderitem;
+	@JsonIgnore
+	public List<OrderItem> getOrderitems() {
+		return orderitems;
 	}
 
-	public void setOrderitem(OrderItem orderitem) {
-		this.orderitem = orderitem;
+	public void setOrderitems(List<OrderItem> orderitems) {
+		this.orderitems = orderitems;
 	}
     
+	
 	
 	
 

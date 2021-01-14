@@ -15,6 +15,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name="tbl_order1")
 public class Order {
@@ -63,7 +65,7 @@ public class Order {
 		this.customer = customer;
 	}
 
-
+	@JsonIgnore
 	public List<OrderItem> getOrderItem() {
 		return orderItem;
 	}

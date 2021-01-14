@@ -136,11 +136,13 @@ public class CartRepositoryImpl implements CartRepository {
 	@Transactional
 	public void addIntoOrderAndOrderItemByCart(Cart cart) {
 		Order order = new Order();
+		List<Product> products = cart.getProducts();
+		System.out.println("work404");
 		order.setCustomer(em.find(Customer.class,cart.getCustomerId()));
 		List<OrderItem> oil = new ArrayList<OrderItem>();
 		List<Integer> quantity = cart.getQuantity();
 		int i = -1;
-		for (Product p : cart.getProducts()) {
+		for (Product p : products) {
 			i = i + 1;
 			OrderItem oi = new OrderItem();
 			oi.setProduct(p);
@@ -150,7 +152,9 @@ public class CartRepositoryImpl implements CartRepository {
 		}
 		order.setOrderItem(oil);
 		order.setOrderDate(LocalDate.now());
+		System.out.println("work4");
 		em.merge(order);
+		System.out.println("working...");
 	}
 
 }

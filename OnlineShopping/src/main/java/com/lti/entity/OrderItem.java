@@ -10,6 +10,8 @@ import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name = "tbl_orderItem1")
 public class OrderItem {
@@ -20,8 +22,8 @@ public class OrderItem {
 	long orderItemId;
 	int quantity;
 	
-	@OneToOne
-	@JoinColumn(name="product_id")
+	@ManyToOne
+	@JoinColumn(name="product_id")  
 	Product product;
 	
 	@ManyToOne
@@ -51,7 +53,7 @@ public class OrderItem {
 	public void setProduct(Product product) {
 		this.product = product;
 	}
-
+	//@JsonIgnore
 	public Order getOrder() {
 		return order;
 	}

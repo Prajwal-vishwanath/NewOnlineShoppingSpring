@@ -25,7 +25,7 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public boolean authenticateWithEmailAndPasswordAdmin(String email, String password) {
+	public Admin authenticateWithEmailAndPasswordAdmin(String email, String password) {
 		// TODO Auto-generated method stub
 		return userRepository.authenticateWithEmailAndPasswordAdmin(email, password);
 	}
@@ -55,7 +55,7 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public boolean authenticateWithEmailAndPasswordCustomer(String email, String password) {
+	public Customer authenticateWithEmailAndPasswordCustomer(String email, String password) {
 		// TODO Auto-generated method stub
 		return userRepository.authenticateWithEmailAndPasswordCustomer(email, password);
 	}
@@ -67,7 +67,7 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public boolean authenticateWithEmailAndPasswordRetailer(String email, String password) {
+	public Retailer authenticateWithEmailAndPasswordRetailer(String email, String password) {
 		// TODO Auto-generated method stub
 		return userRepository.authenticateWithEmailAndPasswordRetailer(email, password);
 	}

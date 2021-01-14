@@ -12,7 +12,7 @@ public interface UserRepository {
 	// ----------- Admin --------------------
 	public Admin addAnAdmin(Admin admin);
 	
-	public boolean authenticateWithEmailAndPasswordAdmin(String email, String password);
+	public Admin authenticateWithEmailAndPasswordAdmin(String email, String password);
 
 
 	// ----------- Customer --------------------
@@ -24,13 +24,13 @@ public interface UserRepository {
 	public Customer findCustomerById(long customerId);
 
 	public List<Customer> viewAllCustomers();
-	public boolean authenticateWithEmailAndPasswordCustomer(String email, String password);
+	public Customer authenticateWithEmailAndPasswordCustomer(String email, String password);
 	public boolean updatePasswordwithEmail(String email, String pwd);
 	
 	// ----------- retailer --------------------
 
 
-	public boolean authenticateWithEmailAndPasswordRetailer(String email, String password);
+	public Retailer authenticateWithEmailAndPasswordRetailer(String email, String password);
 
 
 	public Retailer addOrUpdateRetailer(Retailer retailer);
