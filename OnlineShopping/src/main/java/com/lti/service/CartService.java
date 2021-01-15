@@ -3,6 +3,7 @@ package com.lti.service;
 import java.util.List;
 
 import com.lti.dto.Cart;
+import com.lti.dto.ProductDto;
 import com.lti.entity.Order;
 import com.lti.entity.OrderItem;
 import com.lti.entity.Product;
@@ -38,5 +39,8 @@ public interface CartService {
 	public double calculateTotalPrice(List<Product> products, List<Integer> quantity);
 
 	public void addIntoOrderAndOrderItemByCart(Cart cart);
+	
+	public List<ProductDto> viewOrderHistoryByCustomer(long customerId);
+
 
 }

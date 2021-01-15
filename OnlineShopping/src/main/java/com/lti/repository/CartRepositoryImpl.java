@@ -12,6 +12,7 @@ import javax.transaction.Transactional;
 import org.springframework.stereotype.Component;
 
 import com.lti.dto.Cart;
+import com.lti.dto.ProductDto;
 import com.lti.entity.Customer;
 import com.lti.entity.Order;
 import com.lti.entity.OrderItem;
@@ -156,5 +157,23 @@ public class CartRepositoryImpl implements CartRepository {
 		em.merge(order);
 		System.out.println("working...");
 	}
+	
+	public List<ProductDto> viewOrderHistoryByCustomer(long customerId) {
+		String jpql="Select oi from OrderItem oi where oi.order.customer.customerId=:custId";
+		Query query = em.createQuery(jpql);
+		query.setParameter("custId", customerId);
+		List<OrderItem> items=query.getResultList();
+		List<ProductDto> products=new ArrayList<ProductDto>();
+		for(OrderItem oi:items) {
+			ProductDto prodDto=new ProductDto();
+			prodDto.setProductName(oi.getProduct().getProductName());
+			prodDto.setProductImg(oi.getProduct().getProductImg());
+			prodDto.setQuantity(oi.getQuantity());
+			prodDto.setPrice(oi.getProduct().getProductPrice()*oi.getQuantity());
+			products.add(prodDto);
+		}
+		return products;
+	}
+
 
 }

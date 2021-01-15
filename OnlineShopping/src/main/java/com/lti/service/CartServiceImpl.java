@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.lti.dto.Cart;
+import com.lti.dto.ProductDto;
 import com.lti.entity.Order;
 import com.lti.entity.OrderItem;
 import com.lti.entity.Product;
@@ -112,6 +113,10 @@ public class CartServiceImpl implements CartService {
 			e.printStackTrace();
 		}
 
+	}
+	@Override
+	public List<ProductDto> viewOrderHistoryByCustomer(long customerId) {
+		return cartRepository.viewOrderHistoryByCustomer(customerId);
 	}
 
 }
