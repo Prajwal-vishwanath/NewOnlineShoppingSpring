@@ -140,6 +140,7 @@ public class ProductResource {
 	}
 
 	@GetMapping(value = "/listAllCategories")
+	
 	public CategoryDto listAllCategories() {
 		 return  productService.listAllCategories();
 			

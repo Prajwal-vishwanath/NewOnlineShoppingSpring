@@ -177,4 +177,9 @@ public class UserResource {
     }
     return items;
     }
+    
+    @RequestMapping(value="/findEmail/{emailId}")
+    public boolean checkEmail(@PathVariable("emailId") String emailId) {
+    	return userService.checkEmail(emailId);
+    }
 }
