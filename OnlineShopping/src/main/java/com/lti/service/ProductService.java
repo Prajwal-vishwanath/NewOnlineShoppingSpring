@@ -2,6 +2,7 @@ package com.lti.service;
 
 import java.util.List;
 
+import com.lti.dto.CategoryDto;
 import com.lti.entity.Product;
 
 public interface ProductService {
@@ -13,7 +14,7 @@ public interface ProductService {
 
 	public Product updateStockOfProduct(long ProductId, int stock);
 
-	public void removeProduct(long ProductId);
+	public void removeProduct(Product product);
 
 	public List<Product> viewAllProductByCategoryName(String category);
 
@@ -26,5 +27,10 @@ public interface ProductService {
 	public List<Product> filterByBrand(String brand);
 
 	public List<Product> filterByProductPrice(double minPrice, double maxPrice);
-
+	public List<Product> viewAllProductsToBeApproved();
+	
+	public List<Product> viewAllApprovedProducts();
+	
+	public CategoryDto listAllCategories ( );
 }
+

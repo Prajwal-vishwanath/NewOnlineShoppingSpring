@@ -2,6 +2,8 @@ package com.lti.repository;
 
 import java.util.List;
 
+import com.lti.dto.CategoryDto;
+import com.lti.dto.UserDto;
 import com.lti.entity.Product;
 
 public interface ProductRepository {
@@ -12,9 +14,11 @@ public interface ProductRepository {
 
 	public List<Product> viewAllProducts();
 
+	public List<Product> viewAllProductsToBeApproved();
+
 	public Product updateStockOfProduct(long ProductId, int stock);
 
-	public void removeProduct(long ProductId);
+	public void removeProduct(Product product);
 
 	public List<Product> viewAllProductByCategoryName(String category);
 
@@ -27,5 +31,10 @@ public interface ProductRepository {
 	public List<Product> filterByBrand(String brand);
 
 	public List<Product> filterByProductPrice(double minPrice, double maxPrice);
+	
+	public List<Product> viewAllApprovedProducts();
+	
+	public CategoryDto listAllCategories ( );
+	
 
 }

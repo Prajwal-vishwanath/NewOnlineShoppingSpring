@@ -5,6 +5,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -13,10 +15,13 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.lti.dto.Cart;
 import com.lti.dto.Login;
+import com.lti.dto.ProductDto;
+import com.lti.dto.UserDto;
 import com.lti.entity.Admin;
 import com.lti.entity.Customer;
 import com.lti.entity.Order;
 import com.lti.entity.OrderItem;
+import com.lti.entity.Product;
 import com.lti.entity.Retailer;
 import com.lti.service.CartService;
 import com.lti.service.ProductService;
@@ -122,7 +127,54 @@ public class UserResource {
 		return cartService.viewAllOrderItems();
 	}
     
+    @RequestMapping("/viewAllRetailers")
+    public List<Retailer> viewAllRetailers() {
+    return userService.viewAllRetailers();
+    }
+    
+    @GetMapping(value = "/displayRetailerProducts/{retailerId}")
+    public List<Product> displayRetailerProducts(@PathVariable("retailerId") long retailerId) {
+    List<Product> prods = userService.displayRetailerProducts(retailerId);
+    return prods;
+    }
+    
+    @PostMapping(value="/addProductByRetailer/{retailerId}")
+    public Product addProductByRetailer(@PathVariable("retailerId") long retailerId,@RequestBody Product product) {
+    Retailer retailer=userService.findRetailerById(retailerId);
+    Product prod = userService.addProductByRetailer(retailer,product);
+    return prod;
+    }
+    
+    @GetMapping(value = "/revenue/{retailerId}")
+    public UserDto revenueGeneratedByRetailer(@PathVariable("retailerId") long retailerId) {
+    double totalsum=userService.revenueGeneratedByRetailer(retailerId);
+    UserDto userDto=new UserDto();
+    userDto.setRevenue(totalsum);
+    return userDto;
+    }
 	
-	
-	
+    @GetMapping(value="/orderHistory/{customerId}")
+    public List<ProductDto> viewOrderHistoryByCustomer(@PathVariable("customerId") long customerId) {
+    return cartService.viewOrderHistoryByCustomer(customerId);
+    }
+    
+    
+    @PostMapping(value="/approveProducts")
+    public List<Product> approveProducts(@RequestBody List<Product> products){
+    List<Product> items= products;
+    for(Product p: items ) {
+    	p.setApproved(true);
+    productService.addOrUpdateProduct(p);
+    }
+    return items;
+    }
+    
+    @PostMapping(value="/deleteProducts")
+    public List<Product> deleteProducts(@RequestBody List<Product> products){
+    List<Product> items= products;
+    for(Product p: items ) {
+    productService.removeProduct(p);
+    }
+    return items;
+    }
 }

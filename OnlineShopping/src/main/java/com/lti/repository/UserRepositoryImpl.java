@@ -174,5 +174,30 @@ public class UserRepositoryImpl implements UserRepository {
 		Product product2= em.merge(product);
 		return product2;
 	}
+	
+
+	public long findUserIdByEmailId(String emailId) {
+		String jpql = "select u.customerId from Customer u where u.emailId =: userEmail";
+		long customerId;
+		Query query = em.createQuery(jpql);
+		query.setParameter("userEmail", emailId);
+	    customerId = (long) query.getSingleResult(); 
+		return customerId;
+	}
+	
+	public boolean checkEmail(String emailId) {
+		Customer customer;
+		try {
+			String jpql = "select u from Customer u where u.emailId =: userEmail";
+			Query query = em.createQuery(jpql);
+			query.setParameter("userEmail", emailId);
+			customer= (Customer) query.getSingleResult(); 
+			return true;
+		} catch (NullPointerException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return false;
+		}
+	}
 
 }

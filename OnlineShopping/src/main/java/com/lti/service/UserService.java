@@ -27,6 +27,10 @@ public interface UserService {
 	public Customer authenticateWithEmailAndPasswordCustomer(String email, String password);
 
 	public boolean updatePasswordwithEmail(String email, String pwd);
+	
+	//public String findCustomerNameByEmailId (String emailId);
+	public boolean checkEmail(String emailId);
+	
 
 	// ----------- retailer --------------------
 

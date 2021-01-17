@@ -29,7 +29,7 @@ public class Retailer {
 	boolean approved;
 	
 	
-	@OneToMany(mappedBy = "retailer", cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "retailer",fetch = FetchType.EAGER)
 	List<Product> product;
 
 

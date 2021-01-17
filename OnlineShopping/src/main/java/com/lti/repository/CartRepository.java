@@ -3,6 +3,7 @@ package com.lti.repository;
 import java.util.List;
 
 import com.lti.dto.Cart;
+import com.lti.dto.ProductDto;
 import com.lti.entity.Order;
 import com.lti.entity.OrderItem;
 import com.lti.entity.Product;
@@ -39,5 +40,7 @@ public interface CartRepository {
 
 	public void addIntoOrderAndOrderItemByCart(Cart cart);
 //	public void addIntoOrderItemByCart(Cart cart);
+	
+	public List<ProductDto> viewOrderHistoryByCustomer(long customerId);
 
 }

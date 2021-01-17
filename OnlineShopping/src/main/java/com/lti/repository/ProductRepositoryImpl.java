@@ -9,6 +9,8 @@ import javax.transaction.Transactional;
 
 import org.springframework.stereotype.Component;
 
+import com.lti.dto.CategoryDto;
+import com.lti.dto.UserDto;
 import com.lti.entity.Product;
 @Component
 public class ProductRepositoryImpl implements ProductRepository {
@@ -35,6 +37,21 @@ public class ProductRepositoryImpl implements ProductRepository {
 		List<Product> products = query.getResultList();
 		return products;
 	}
+	
+	public List<Product> viewAllApprovedProducts() {
+		String jpql = "from Product p where p.approved= true";
+		Query query = em.createQuery(jpql);
+		List<Product> products = query.getResultList();
+		return products;
+	}
+	
+	public List<Product> viewAllProductsToBeApproved() {
+		String jpql = "from Product p where p.approved = false";
+		Query query = em.createQuery(jpql);
+		List<Product> products = query.getResultList();
+		return products;
+	}
+
 
 	@Transactional
 	public Product updateStockOfProduct(long ProductId, int stock) {
@@ -45,9 +62,13 @@ public class ProductRepositoryImpl implements ProductRepository {
 	}
 
 	@Transactional
-	public void removeProduct(long productId) {
-		em.remove(em.find(Product.class, productId));
-
+	public void removeProduct(Product product) {
+		long productId = product.getProductId();
+		String jpql = "delete from Product p where p.productId=: prodId";
+		Query query = em.createQuery(jpql);
+		query.setParameter("prodId", productId);
+		System.out.println("deleted...?");
+		query.executeUpdate();
 	}
 
 	
@@ -61,7 +82,7 @@ public class ProductRepositoryImpl implements ProductRepository {
 
 	
 	public List<Product> viewProductsByProductName(String productName) {
-		String jpql = "select p from Product p where p.productName=:prodname";
+		String jpql = "select p from Product p where p.productName like %:prodname%";
 		Query query = em.createQuery(jpql);
 		query.setParameter("prodname", productName);
 		List<Product> prod =  query.getResultList();
@@ -70,9 +91,9 @@ public class ProductRepositoryImpl implements ProductRepository {
 
 	
 	public List<Product> filterByProductName(String productName) {
-		String jpql = "select p from Product p where p.productName=:prodname";
+		String jpql = "select p from Product p where UPPER(p.productName) LIKE :prodname";
 		Query query = em.createQuery(jpql);
-		query.setParameter("prodname", productName);
+		query.setParameter("prodname", "%"+productName.toUpperCase()+"%");
 		List<Product> prod =  query.getResultList();
 		return prod;
 	}
@@ -106,5 +127,12 @@ public class ProductRepositoryImpl implements ProductRepository {
 		List<Product> prod = query.getResultList();
 		return prod;
 	}
-
+	
+	public CategoryDto listAllCategories (){
+		String jpql = "select distinct p.categoryName from Product p ";
+		Query query=em.createQuery(jpql);
+		CategoryDto categoryDto= new CategoryDto();  
+		categoryDto.setCategories(query.getResultList());  
+		return categoryDto;
+	}
 }

@@ -27,6 +27,11 @@ public interface UserRepository {
 	public Customer authenticateWithEmailAndPasswordCustomer(String email, String password);
 	public boolean updatePasswordwithEmail(String email, String pwd);
 	
+	//public String findCustomerNameByEmailId (String emailId);
+	public long findUserIdByEmailId(String emailId);
+	public boolean checkEmail(String emailId);
+	
+	
 	// ----------- retailer --------------------
 
 
@@ -44,6 +49,7 @@ public interface UserRepository {
 	public List<Product> displayRetailerProducts(long retailerId);
 
 	public Product addProductByRetailer(Retailer retailer, Product product);
+	
 	
 	
 }

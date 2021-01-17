@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.lti.dto.CategoryDto;
 import com.lti.entity.Product;
 import com.lti.repository.ProductRepository;
 
@@ -39,9 +40,9 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	@Override
-	public void removeProduct(long ProductId) {
+	public void removeProduct(Product product) {
 		// TODO Auto-generated method stub
-		productRepository.removeProduct(ProductId);
+		productRepository.removeProduct(product);
 	}
 
 	@Override
@@ -80,4 +81,15 @@ public class ProductServiceImpl implements ProductService {
 		return productRepository.filterByProductPrice(minPrice,maxPrice);
 	}
 
+	public List<Product> viewAllProductsToBeApproved(){
+		return productRepository.viewAllProductsToBeApproved();
+	}
+	
+	public List<Product> viewAllApprovedProducts(){
+		return productRepository.viewAllApprovedProducts();
+	}
+	
+	public CategoryDto listAllCategories ( ) {
+		return productRepository.listAllCategories();
+	}
 }

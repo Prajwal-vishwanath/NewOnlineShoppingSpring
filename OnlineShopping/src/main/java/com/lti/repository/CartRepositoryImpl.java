@@ -12,6 +12,7 @@ import javax.transaction.Transactional;
 import org.springframework.stereotype.Component;
 
 import com.lti.dto.Cart;
+import com.lti.dto.ProductDto;
 import com.lti.entity.Customer;
 import com.lti.entity.Order;
 import com.lti.entity.OrderItem;
@@ -31,13 +32,11 @@ public class CartRepositoryImpl implements CartRepository {
 		return order2;
 	}
 
-	
 	public Order findOrderById(long orderId) {
 		Order order = em.find(Order.class, orderId);
 		return order;
 	}
 
-	
 	public List<Order> viewAllOrders() {
 		String jpql = "from Order o";
 		Query query = em.createQuery(jpql);
@@ -51,12 +50,10 @@ public class CartRepositoryImpl implements CartRepository {
 		return orderItem2;
 	}
 
-	
 	public OrderItem findOrderItemById(long orderItemId) {
 		return em.find(OrderItem.class, orderItemId);
 	}
 
-	
 	public List<OrderItem> viewAllOrderItems() {
 		String jpql = "from OrderItem oi";
 		Query query = em.createQuery(jpql);
@@ -64,19 +61,16 @@ public class CartRepositoryImpl implements CartRepository {
 		return orderItems;
 	}
 
-	
 	public Cart getCart() {
 		// TODO Auto-generated method stub
 		return cart;
 	}
 
-	
 	public void setCart(Cart cart) {
 		this.cart = cart;
 
 	}
 
-	
 	public void createCart(long customerId) {
 		cart = new Cart();
 		cart.setCustomerId(customerId);
@@ -85,7 +79,6 @@ public class CartRepositoryImpl implements CartRepository {
 
 	}
 
-	
 	public void addToCart(long productId) {
 		Product product = em.find(Product.class, productId);
 		cart.getProducts().add(product);
@@ -93,7 +86,6 @@ public class CartRepositoryImpl implements CartRepository {
 
 	}
 
-	
 	public int searchProductinCart(Product product) {
 		List<Product> products = cart.getProducts();
 		int i = -1;
@@ -106,7 +98,6 @@ public class CartRepositoryImpl implements CartRepository {
 		return i;
 	}
 
-	
 	public void increaseProductQuantityinCart(Product product, int quantity) {
 		int i = searchProductinCart(product);
 		List<Integer> quantity1 = cart.getQuantity();
@@ -115,13 +106,11 @@ public class CartRepositoryImpl implements CartRepository {
 
 	}
 
-	
 	public double calculateProductPriceWithQuantityinCart(Product product, int quantity) {
 		double price = product.getProductPrice() * quantity;
 		return price;
 	}
 
-	
 	public double calculateTotalPrice(List<Product> products, List<Integer> quantity) {
 		double totalPrice = 0;
 		int i = 0;
@@ -138,7 +127,7 @@ public class CartRepositoryImpl implements CartRepository {
 		Order order = new Order();
 		List<Product> products = cart.getProducts();
 		System.out.println("work404");
-		order.setCustomer(em.find(Customer.class,cart.getCustomerId()));
+		order.setCustomer(em.find(Customer.class, cart.getCustomerId()));
 		List<OrderItem> oil = new ArrayList<OrderItem>();
 		List<Integer> quantity = cart.getQuantity();
 		int i = -1;
@@ -155,6 +144,23 @@ public class CartRepositoryImpl implements CartRepository {
 		System.out.println("work4");
 		em.merge(order);
 		System.out.println("working...");
+	}
+
+	public List<ProductDto> viewOrderHistoryByCustomer(long customerId) {
+		String jpql = "Select oi from OrderItem oi where oi.order.customer.customerId=:custId";
+		Query query = em.createQuery(jpql);
+		query.setParameter("custId", customerId);
+		List<OrderItem> items = query.getResultList();
+		List<ProductDto> products = new ArrayList<ProductDto>();
+		for (OrderItem oi : items) {
+			ProductDto prodDto = new ProductDto();
+			prodDto.setProductName(oi.getProduct().getProductName());
+			prodDto.setProductImg(oi.getProduct().getProductImg());
+			prodDto.setQuantity(oi.getQuantity());
+			prodDto.setPrice(oi.getProduct().getProductPrice() * oi.getQuantity());
+			products.add(prodDto);
+		}
+		return products;
 	}
 
 }

@@ -39,7 +39,7 @@ public class Product {
 	@JoinColumn(name="retailer_Id")
 	Retailer retailer;
 	
-    @OneToMany(mappedBy = "product",cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "product",fetch = FetchType.EAGER)
     List<OrderItem> orderitems;
 
 	public long getProductId() {

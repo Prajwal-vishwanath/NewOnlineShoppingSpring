@@ -1,4 +1,4 @@
-package com.lti.service;
+  package com.lti.service;
 
 import java.util.List;
 
@@ -17,6 +17,8 @@ public class UserServiceImpl implements UserService {
 
 	@Autowired
 	UserRepository userRepository;
+	@Autowired
+	EmailService emailService;
 
 	@Override
 	public Admin addAnAdmin(Admin admin) {
@@ -106,6 +108,18 @@ public class UserServiceImpl implements UserService {
 	public Product addProductByRetailer(Retailer retailer, Product product) {
 		// TODO Auto-generated method stub
 		return userRepository.addProductByRetailer(retailer, product);
+	}
+	
+	public boolean checkEmail(String emailId) {
+		boolean exist= userRepository.checkEmail(emailId);
+		if(exist) {
+			String subject = "Password reset request";
+			String email=emailId;
+			String  text ="Password change link : https://localhost:4200/passwordReset\" ";
+			emailService.sendEmailForNewRegistration(email, text, subject);
+			System.out.println("Email sent");
+		}
+		return userRepository.checkEmail(emailId);
 	}
 
 }
