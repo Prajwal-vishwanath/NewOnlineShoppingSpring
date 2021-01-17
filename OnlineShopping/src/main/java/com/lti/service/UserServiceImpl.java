@@ -115,7 +115,7 @@ public class UserServiceImpl implements UserService {
 		if(exist) {
 			String subject = "Password reset request";
 			String email=emailId;
-			String  text ="Password change link : https://localhost:4200/passwordReset\" ";
+			String  text ="Password change link : http://localhost:4200/passwordReset\" ";
 			emailService.sendEmailForNewRegistration(email, text, subject);
 			System.out.println("Email sent");
 		}

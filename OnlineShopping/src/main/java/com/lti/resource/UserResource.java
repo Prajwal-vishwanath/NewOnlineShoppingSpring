@@ -182,4 +182,11 @@ public class UserResource {
     public boolean checkEmail(@PathVariable("emailId") String emailId) {
     	return userService.checkEmail(emailId);
     }
+    
+    @PostMapping(value="/updatePassword")
+    public UserDto  updatePasswordwithEmail(@RequestBody Login login) {
+    	UserDto userDto = new UserDto();
+    		userDto.setUpdate(userService.updatePasswordwithEmail(login.getEmailId(), login.getPassword()));	
+    			return userDto;
+    }
 }

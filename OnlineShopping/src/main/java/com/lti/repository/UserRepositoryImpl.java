@@ -191,13 +191,15 @@ public class UserRepositoryImpl implements UserRepository {
 			String jpql = "select u from Customer u where u.emailId =: userEmail";
 			Query query = em.createQuery(jpql);
 			query.setParameter("userEmail", emailId);
-			customer= (Customer) query.getSingleResult(); 
+			customer= (Customer) query.getSingleResult();
+			if(customer !=null)
 			return true;
 		} catch (NullPointerException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			return false;
 		}
+		return false;
 	}
 
 }

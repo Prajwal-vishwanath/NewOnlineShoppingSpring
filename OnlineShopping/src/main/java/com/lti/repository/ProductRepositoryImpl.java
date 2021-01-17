@@ -73,7 +73,7 @@ public class ProductRepositoryImpl implements ProductRepository {
 
 	
 	public List<Product> viewAllProductByCategoryName(String category) {
-		String jpql = "select p from Product p where p.categoryName=:category";
+		String jpql = "select p from Product p where p.categoryName=:category and p.approved= true";
 		Query query = em.createQuery(jpql);
 		query.setParameter("category", category);
 		List<Product> products = query.getResultList();
@@ -91,7 +91,7 @@ public class ProductRepositoryImpl implements ProductRepository {
 
 	
 	public List<Product> filterByProductName(String productName) {
-		String jpql = "select p from Product p where UPPER(p.productName) LIKE :prodname";
+		String jpql = "select p from Product p where UPPER(p.productName) LIKE :prodname and p.approved= true" ;
 		Query query = em.createQuery(jpql);
 		query.setParameter("prodname", "%"+productName.toUpperCase()+"%");
 		List<Product> prod =  query.getResultList();
@@ -129,7 +129,7 @@ public class ProductRepositoryImpl implements ProductRepository {
 	}
 	
 	public CategoryDto listAllCategories (){
-		String jpql = "select distinct p.categoryName from Product p ";
+		String jpql = "select distinct p.categoryName from Product p where p.approved= true";
 		Query query=em.createQuery(jpql);
 		CategoryDto categoryDto= new CategoryDto();  
 		categoryDto.setCategories(query.getResultList());  

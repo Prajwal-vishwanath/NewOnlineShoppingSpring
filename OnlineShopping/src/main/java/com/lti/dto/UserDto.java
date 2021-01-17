@@ -11,6 +11,15 @@ public class UserDto {
 	List<Customer> customers;
 	List<Retailer> retailers;
 	double revenue;
+	boolean update;
+
+	public boolean isUpdate() {
+		return update;
+	}
+
+	public void setUpdate(boolean update) {
+		this.update = update;
+	}
 
 	public List<Product> getProducts() {
 		return products;
